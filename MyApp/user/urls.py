@@ -1,6 +1,6 @@
 from django.urls import path, include
-from user.views import UserToken
+from user.views import UserInfo
 
 urlpatterns = [
-    path('token', UserToken.as_view()),
+    path('token', UserInfo.as_view()),
 ]
