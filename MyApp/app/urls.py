@@ -25,4 +25,6 @@ urlpatterns = [
     path('auth/', include('djoser.urls')),
     path('auth-token/', include('djoser.urls.authtoken')),
 
+    path("chat/", include("chat.urls", namespace='chat')),
+
 ]
