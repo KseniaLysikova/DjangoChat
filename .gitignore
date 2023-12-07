@@ -1,2 +1,5 @@
 .idea/
 */secret_key.py
+*/venv
+*.sqlite3
+profile_pics/*
