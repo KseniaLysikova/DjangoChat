@@ -2,11 +2,11 @@ from django.contrib.auth.base_user import BaseUserManager
 
 
 class ChatUserManager(BaseUserManager):
-    def create_user(self, username, email, password, birthdate, profile_pic, **extra_fields):
+    def create_user(self, username, email, password, **extra_fields):
         if not email:
             raise ValueError(_('The email must be set'))
         email = self.normalize_email(email)
-        user = self.model(username=username, email=email, birthdate=birthdate, profile_pic=profile_pic, **extra_fields)
+        user = self.model(username=username, email=email, **extra_fields)
 
         user.set_password(password)
         user.save()
