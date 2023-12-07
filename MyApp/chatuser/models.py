@@ -11,5 +11,5 @@ class ChatUser(AbstractUser):
     birthdate = models.DateField()
     profile_pic = models.ImageField(upload_to="profile_pics/")
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ["birthdate", "profile_pic"]
+    REQUIRED_FIELDS = ["username", "birthdate", "profile_pic"]
     objects = ChatUserManager()
