@@ -1,19 +1,13 @@
 from rest_framework import serializers
 from chatuser.models import ChatUser
+from chat.serializers import RoomNoUsersSerializer
 
 
 class ChatUserSerializer(serializers.ModelSerializer):
-    rooms = serializers.SerializerMethodField()
+    rooms = RoomNoUsersSerializer(required=False, read_only=True, source="rooms.all", many=True)
 
     class Meta:
         model = ChatUser
         fields = ChatUser.REQUIRED_FIELDS + ['rooms']
 
-    def get_rooms(self, obj):
-        return [{"id": room.id, "name": room.name} for room in obj.rooms.all()]
 
-
-class ChatUserNoRoomsSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ChatUser
-        fields = ChatUser.REQUIRED_FIELDS

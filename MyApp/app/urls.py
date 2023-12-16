@@ -18,6 +18,8 @@ import chat.routing as chat_urls
 from django.contrib import admin
 from chat.consumers import WebSocketConsumer
 from django.urls import re_path, path, include
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,5 +27,5 @@ urlpatterns = [
     path('auth/', include('djoser.urls')),
     path('auth-token/', include('djoser.urls.authtoken')),
     path('chat/', include(chat_urls.urlpatterns))
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

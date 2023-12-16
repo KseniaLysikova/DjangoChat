@@ -9,7 +9,11 @@ class Room(models.Model):
     users = models.ManyToManyField(ChatUser, related_name="rooms", blank=True)
 
 
+def get_default_expire_date():
+    return datetime.datetime.now + datetime.timedelta(days=1)
+
+
 class Invitation(models.Model):
     room = models.ForeignKey(Room, related_name="invitations", on_delete=models.CASCADE)
     invitor = models.ForeignKey(ChatUser, on_delete=models.CASCADE)
-    expires_at = models.DateField(default=datetime.datetime.now() + datetime.timedelta(days=1))
+    expires_at = models.DateField(default=get_default_expire_date)

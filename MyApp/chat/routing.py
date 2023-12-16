@@ -4,4 +4,5 @@ from . import views
 
 websocket_urlpatterns = [re_path(r'^ws/chat/(?P<room_name>\w+)$', consumers.WebSocketConsumer.as_asgi())]
 
-urlpatterns = [re_path(r'^rooms/$', views.Rooms.as_view())]
+urlpatterns = [re_path(r'^rooms/$', views.Rooms.as_view()),
+               re_path(r'^invite/', views.Invite.as_view())]
