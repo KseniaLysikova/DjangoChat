@@ -14,6 +14,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+import chat.routing as chat_urls
 from django.contrib import admin
 from chat.consumers import WebSocketConsumer
 from django.urls import re_path, path, include
@@ -23,5 +24,6 @@ urlpatterns = [
 
     path('auth/', include('djoser.urls')),
     path('auth-token/', include('djoser.urls.authtoken')),
+    path('chat/', include(chat_urls.urlpatterns))
 ]
 

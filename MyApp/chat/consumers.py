@@ -5,11 +5,21 @@ import urllib
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 from channels.db import database_sync_to_async
+from .models import Room
 
 
 @database_sync_to_async
 def get_user(token):
     return Token.objects.get(key=token).user
+
+
+@database_sync_to_async
+def is_user_in_room(room_id, user):
+    try:
+        r = Room.objects.get(id=room_id)
+        return r.users.contains(user)
+    except Room.DoesNotExist:
+        return False
 
 
 class WebSocketConsumer(AsyncWebsocketConsumer):
@@ -18,11 +28,10 @@ class WebSocketConsumer(AsyncWebsocketConsumer):
         user = await get_user(token)
         await login(self.scope, user)
 
-        self.room_name = self.scope["url_route"]["kwargs"]["room_name"]
-        # self.room_name = "chat_1"
-        print(self.scope["url_route"])
-        self.room_group_name = "chat_%s" % self.room_name
-
+        room_id = self.scope["url_route"]["kwargs"]["room_name"]
+        if not await is_user_in_room(room_id, user):
+            await self.close()
+        self.room_group_name = f"chat_{room_id}"
         await self.channel_layer.group_add(self.room_group_name, self.channel_name)
         await self.accept()
 
