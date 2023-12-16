@@ -3,4 +3,5 @@
 */venv
 *.sqlite3
 profile_pics/*
+!profile_pics/default.png
 */migrations

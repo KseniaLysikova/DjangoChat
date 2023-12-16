@@ -10,7 +10,7 @@ class Room(models.Model):
 
 
 def get_default_expire_date():
-    return datetime.datetime.now + datetime.timedelta(days=1)
+    return datetime.datetime.now() + datetime.timedelta(days=1)
 
 
 class Invitation(models.Model):

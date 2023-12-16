@@ -26,3 +26,4 @@ class RoomNoUsersSerializer(serializers.ModelSerializer):
 class InvitationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Invitation
+        exclude = ["expires_at"]
