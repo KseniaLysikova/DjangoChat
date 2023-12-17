@@ -1,3 +1,5 @@
+import datetime
+
 from django.db import models
 from chatuser.models import ChatUser
 from django.utils import timezone

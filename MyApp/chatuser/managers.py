@@ -4,7 +4,7 @@ from django.contrib.auth.base_user import BaseUserManager
 class ChatUserManager(BaseUserManager):
     def create_user(self, username, email, password, **extra_fields):
         if not email:
-            raise ValueError(_('The email must be set'))
+            raise ValueError('The email must be set')
         email = self.normalize_email(email)
         user = self.model(username=username, email=email, **extra_fields)
 
@@ -18,7 +18,7 @@ class ChatUserManager(BaseUserManager):
         extra_fields.setdefault('is_active', True)
 
         if extra_fields.get('is_staff') is not True:
-            raise ValueError(_('Superuser must have is_staff=True.'))
+            raise ValueError('Superuser must have is_staff=True.')
         if extra_fields.get('is_superuser') is not True:
-            raise ValueError(_('Superuser must have is_superuser=True.'))
+            raise ValueError('Superuser must have is_superuser=True.')
         return self.create_user(email, password, **extra_fields)

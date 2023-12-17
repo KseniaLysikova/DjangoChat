@@ -6,3 +6,6 @@ profile_pics/*
 !profile_pics/default.png
 migrations/
 __pycache__/
+*.log
+*.pot
+*.pyc
