@@ -26,6 +26,16 @@ class Rooms(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class LeaveRoom(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [authentication.TokenAuthentication]
+
+    def post(self, request):
+        room = request.user.rooms.get(id=request.data["room"])
+        room.users.remove(request.user)
+        return Response(status=status.HTTP_200_OK)
+
+
 class CreateInvitation(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [authentication.TokenAuthentication]
