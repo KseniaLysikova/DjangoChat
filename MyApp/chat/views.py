@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from .serializers import RoomSerializer, ChatUserNoRoomsSerializer, InvitationSerializer
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Invitation
+from .models import Room, Invitation
 from django.utils import timezone
 
 
@@ -31,9 +31,12 @@ class LeaveRoom(APIView):
     authentication_classes = [authentication.TokenAuthentication]
 
     def post(self, request):
-        room = request.user.rooms.get(id=request.data["room"])
-        room.users.remove(request.user)
-        return Response(status=status.HTTP_200_OK)
+        try:
+            room = request.user.rooms.get(id=request.data["room"])
+            room.users.remove(request.user)
+            return Response(status=status.HTTP_200_OK)
+        except Room.DoesNotExist:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 class CreateInvitation(APIView):
