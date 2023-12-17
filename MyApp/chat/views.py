@@ -7,6 +7,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import Room, Invitation
 from django.utils import timezone
+from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiRequest, OpenApiTypes, inline_serializer
+from rest_framework import serializers
 
 
 class Rooms(APIView):
@@ -16,7 +18,9 @@ class Rooms(APIView):
     def get(self, request):
         serializer = RoomSerializer(request.user.rooms.all(), many=True)
         return Response(serializer.data)
-
+    @extend_schema(
+        request=RoomSerializer, responses=RoomSerializer
+    )
     def post(self, request):
         serializer = RoomSerializer(data=request.data)
         if serializer.is_valid():
@@ -30,6 +34,9 @@ class LeaveRoom(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [authentication.TokenAuthentication]
 
+    @extend_schema(
+        request=inline_serializer("leave_serializer", {"room": serializers.IntegerField()})
+    )
     def post(self, request):
         try:
             room = request.user.rooms.get(id=request.data["room"])
@@ -43,6 +50,10 @@ class CreateInvitation(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [authentication.TokenAuthentication]
 
+    @extend_schema(
+        request=inline_serializer("create_invite_serializer", {"room": serializers.IntegerField()}),
+        responses={201: InvitationSerializer}
+    )
     def post(self, request):
         data = {"invitor": request.user.id, "room": request.data["room"]}
         serializer = InvitationSerializer(data=data)

@@ -13,3 +13,4 @@ class ChatUser(AbstractUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ["username", "birthdate", "profile_pic"]
     objects = ChatUserManager()
+

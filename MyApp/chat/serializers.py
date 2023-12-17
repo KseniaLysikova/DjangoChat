@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import *
-
+from drf_spectacular.utils import extend_schema_serializer
 
 class ChatUserNoRoomsSerializer(serializers.ModelSerializer):
     class Meta:
@@ -13,7 +13,7 @@ class RoomSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Room
-        fields = ["name", "users_info"]
+        fields = ["id", "name", "users_info"]
         depth = 1
 
 
