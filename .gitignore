@@ -1,11 +1,11 @@
-.idea/
+.idea
 */secret_key.py
 */venv
 *.sqlite3
 profile_pics/*
 !profile_pics/default.png
 migrations/
-__pycache__/
+__pycache__
 *.log
 *.pot
 *.pyc
