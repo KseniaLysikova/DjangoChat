@@ -8,3 +8,4 @@ urlpatterns = [re_path(r'^rooms/$', views.Rooms.as_view()),
                re_path(r'^accept_invite/(?P<invitation_id>\w+)/?$', views.AcceptInvitation.as_view()),
                re_path(r'^create_invite/', views.CreateInvitation.as_view()),
                re_path(r'^leave/$', views.LeaveRoom.as_view())]
+

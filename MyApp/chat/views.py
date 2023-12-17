@@ -74,3 +74,4 @@ class AcceptInvitation(APIView):
             invitation.room.users.add(request.user)
             return Response(RoomSerializer(invitation.room).data, status=status.HTTP_200_OK)
         return Response(status=status.HTTP_400_BAD_REQUEST)
+
