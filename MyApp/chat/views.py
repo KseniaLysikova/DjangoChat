@@ -18,6 +18,7 @@ class Rooms(APIView):
     def get(self, request):
         serializer = RoomSerializer(request.user.rooms.all(), many=True)
         return Response(serializer.data)
+
     @extend_schema(
         request=RoomSerializer, responses=RoomSerializer
     )
@@ -74,4 +75,3 @@ class AcceptInvitation(APIView):
             invitation.room.users.add(request.user)
             return Response(RoomSerializer(invitation.room).data, status=status.HTTP_200_OK)
         return Response(status=status.HTTP_400_BAD_REQUEST)
-
